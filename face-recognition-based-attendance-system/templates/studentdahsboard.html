@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html, body {
+            display: flex;
+            box-sizing: border-box;
+            padding: 20px;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-image: url('https://th.bing.com/th/id/R.5bf78762f084edcc74be63a5a459f62a?rik=aXJIwoRV04r0zA&riu=http%3a%2f%2fwww.gptccbe.co.in%2fthumbs%2fbanner%2fs3.jpg&ehk=SlNZwvLbPl9GoTHkyNtGMlEPm%2b32Vkw4jB%2fwgLf9IPA%3d&risl=&pid=ImgRaw&r=0');
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: rgb(8, 8, 8);
+            font-size: 30px;
+            margin: 20px 0 0;
+            font-weight: bold;
+        }
+        
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin-right: 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar .title {
+            color: rgb(250, 246, 246);
+            font-size: 22px;
+            font-weight: bold;
+            text-align: left;
+        }
+        h4 {
+            color: white;
+            font-size: 20px;
+            margin: 5px 0 0;
+            font-weight: normal;
+        }
+        .navbar h5 {
+            font-size: 14px;
+            margin: 5px 0 0;
+            font-weight: normal;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-right: 30px;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #3867d6;
+            color: white;
+        }
+
+        .navbar button {
+            margin-right: 30px;
+            padding: 10px 15px;
+            background-color: #ff5e62;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .navbar button:hover {
+            background-color: #d8345f;
+        }
+
+        /* Heading */
+        h1 {
+            width: 100%;
+            margin-top: 0px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: #f6f8f7;
+            text-align: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            font-size: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* User Count */
+        p {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #f6f8f7;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        th, td {
+            border: 1px solid #09251b;
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2d3e50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        /* Delete Button */
+        .delete-button {
+            padding: 8px 12px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: darkred;
+            transform: scale(1.05);
+        }
+
+        /* Main Container */
+        .container {
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            margin-top: 10px;
+            border-radius: 20px; /* Optional: Add rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow */
+            padding: 7%; /* Optional: Add some padding */
+        }
+
+        /* Left Section */
+        .left {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Right Section */
+        .right {
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .dashboard-card {
+            margin-top: 20px;
+        }
+
+        .design {
+            border: 2px solid white;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-download {
+            color: rgb(153, 9, 4);
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; 
+        }
+
+        .btn-download:hover {
+            background-color: rgb(2, 149, 56); /* Optional: Add a hover effect */
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar div {
+                margin-top: 10px;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="title">Tamizha University <br> 
+            <h5>Coimbatore, Tamil Nadu, India</h5>
+        </div>
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('admin_page') }}">Admin</a>
+            <a href="{{ url_for('student_page') }}">Student</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="left">
+            <h2 class="text-center mt-4">Student Dashboard</h2>
+            <h3 class="text-center">Welcome, {{ username }} (Roll No: {{ roll }})</h3>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <script>
+                        alert("{{ message }}");
+                    </script>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
+        <!-- Attendance Table -->
+        <div class="right design">
+            <div class="card dashboard-card mt-4">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Your Attendance Record</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Roll</th>
+                                <th>Subject</th>
+                                <th>Subject ID</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if attendance_records %}
+                                {% for record in attendance_records %}
+                                <tr>
+                                    <td>{{ record['Name'] }}</td>
+                                    <td>{{ record['Roll'] }}</td>
+                                    <td>{{ record['Subject'] }}</td>
+                                    <td>{{ record['Subject_ID'] }}</td>
+                                    <td>{{ record['Date'] }}</td>
+                                    <td>{{ record['Time'] }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" class="text-center">No attendance records found.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    <a href="{{ url_for('download_student_attendance') }}" class="btn-download">Download Attendance (CSV)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

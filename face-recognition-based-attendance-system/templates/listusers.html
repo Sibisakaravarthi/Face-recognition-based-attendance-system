@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Users</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- External CSS -->
+    <style>
+        /* General Styles */
+        html, body {
+            display: flex;
+            box-sizing: border-box;
+            padding: 5%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-image: url('https://th.bing.com/th/id/R.5bf78762f084edcc74be63a5a459f62a?rik=aXJIwoRV04r0zA&riu=http%3a%2f%2fwww.gptccbe.co.in%2fthumbs%2fbanner%2fs3.jpg&ehk=SlNZwvLbPl9GoTHkyNtGMlEPm%2b32Vkw4jB%2fwgLf9IPA%3d&risl=&pid=ImgRaw&r=0');
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar .title {
+            color: rgb(250, 246, 246);
+            font-size: 22px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .navbar h5 {
+            font-size: 14px;
+            margin: 5px 0 0;
+            font-weight: normal;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #3867d6;
+            color: white;
+        }
+
+        .navbar button {
+            margin-right: 30px;
+            padding: 10px 15px;
+            background-color: #ff5e62;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .navbar button:hover {
+            background-color: #d8345f;
+        }
+
+        /* Heading */
+        h1 {
+            width: 100%;
+            margin-top: 0px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: #f6f8f7;
+            text-align: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            font-size: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* User Count */
+        p {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #f6f8f7;
+        }
+
+        /* Table */
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        th, td {
+            border: 1px solid #09251b;
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2d3e50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        /* Delete Button */
+        .delete-button {
+            padding: 8px 12px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: darkred;
+            transform: scale(1.05);
+        }
+
+        .container{
+            height: 100%;
+            width: 100vw;
+            display: flex;
+            gap: 40px;
+        }
+
+        .left{
+            width: 30%;
+        }
+
+        .right{
+            flex: 1;
+            padding: 40px;
+            margin-top: 7vh;
+        }
+
+        .right table{
+            width: 100%;
+        }
+        .design{
+            border: 2px solid white;
+            margin-top: 80px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar div {
+                margin-top: 10px;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="title">Tamizha University <br> 
+            <h5>Coimbatore, Tamil Nadu, India</h5>
+        </div>
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('attendance') }}">Attendance</a>
+            <button onclick="downloadAttendance()">
+                    Download Attendance</button>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="left">
+            <div class="design">
+                <h1>List of Registered Users</h1>
+            <img src="https://media.istockphoto.com/id/1210233256/photo/happy-african-american-woman-at-graduation.jpg?s=612x612&w=0&k=20&c=OkGYBZDt6RYdgzNwoo4_wab395j4tIr3zLjMbNHhYK8=" alt="student image" style="display: block; margin: 0 auto; width: 340px; border-radius: 50%;">
+            <p>Total Registered Users: {{ totalreg }}</p>
+            </div>
+            
+        </div>
+        <div class="right">
+            
+            <div class="userlist">
+        
+            <!-- Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in userlist %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>
+                            <!-- Delete Form -->
+                            <form method="POST" action="/listusers" style="display:inline;">
+                                <input type="hidden" name="roll_to_delete" value="{{ user[1] }}">
+                                <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete {{ user[0] }}?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript -->
+    <script>
+        function downloadAttendance() {
+            alert("Downloading attendance...");
+            window.location.href = "/download_attendance";
+        }
+    </script>
+
+</body>
+</html>
