@@ -23,7 +23,7 @@ Pandas
 🚀 How to Run
 Clone the Repository
 
-git clone https://github.com/Sibisakaravarthi/Face-recognition-attendance.git
+git clone https://github.com/Sibisakaravarthi/Face-recognition-based-attendance-system.git
 cd face-recognition-attendance
 Install Dependencies
 
